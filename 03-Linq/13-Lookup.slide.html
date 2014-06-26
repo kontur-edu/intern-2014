@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-theory">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='13-Lookup' class='slide'>
+			<!--startblock-->
+<h2>Группировка с помощью ToDictionary и ToLookup</h2>
+<p>Нередко встречается необходимость сгруппировав элементы, 
+преобразовать их в структуру данных для поиска группы по ключу группировки.</p>
+<p>Это можно было бы сделать с помощью такой комбинации:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>string[] names = {&quot;Pavel&quot;, &quot;Peter&quot;, &quot;Andrew&quot;, &quot;Anna&quot;, &quot;Alice&quot;, &quot;John&quot;};
+
+var namesByLetter = new Dictionary&lt;char, List&lt;string&gt;&gt;();
+foreach (var group in names.GroupBy(name =&gt; name[0]))
+	namesByLetter.Add(group.Key, group.ToList());
+
+Assert.That(namesByLetter[&#39;J&#39;], Is.EquivalentTo(new[] {&quot;John&quot;}));
+Assert.That(namesByLetter[&#39;P&#39;], Is.EquivalentTo(new[] {&quot;Pavel&quot;, &quot;Peter&quot;}));</textarea>
+			<!--startblock-->
+<p>Ровно того же эффекта можно добиться и без цикла при помощи Linq-метода <code>ToDictionary</code>:</p>
+<p><code>IDictionary&lt;K, V&gt; ToDictionary(this IEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector, Func&lt;T, V&gt; valueSelector)</code></p>
+			<!--endblock-->
+			<textarea class='code code-sample'>string[] names = {&quot;Pavel&quot;, &quot;Peter&quot;, &quot;Andrew&quot;, &quot;Anna&quot;, &quot;Alice&quot;, &quot;John&quot;};
+
+Dictionary&lt;char, List&lt;string&gt;&gt; namesByLetter = names
+	.GroupBy(name =&gt; name[0])
+	.ToDictionary(group =&gt; group.Key, group =&gt; group.ToList());
+
+Assert.That(namesByLetter[&#39;J&#39;], Is.EquivalentTo(new[] {&quot;John&quot;}));
+Assert.That(namesByLetter[&#39;P&#39;], Is.EquivalentTo(new[] {&quot;Pavel&quot;, &quot;Peter&quot;}));</textarea>
+			<!--startblock-->
+<p>Но ещё проще воспользоваться специальным методом <code>ToLookup</code>:</p>
+<p><code>ILookup&lt;K, T&gt; ToLookup(this IEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)</code></p>
+			<!--endblock-->
+			<textarea class='code code-sample'>string[] names = {&quot;Pavel&quot;, &quot;Peter&quot;, &quot;Andrew&quot;, &quot;Anna&quot;, &quot;Alice&quot;, &quot;John&quot;};
+ILookup&lt;char, string&gt; namesByLetter = names.ToLookup(name =&gt; name[0]);
+
+Assert.That(namesByLetter[&#39;J&#39;], Is.EquivalentTo(new[] {&quot;John&quot;}));
+Assert.That(namesByLetter[&#39;P&#39;], Is.EquivalentTo(new[] {&quot;Pavel&quot;, &quot;Peter&quot;}));</textarea>
+    
+
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="12-WordsFrequenciesExercise.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="14-LookupExercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

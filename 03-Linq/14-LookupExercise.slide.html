@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-exercise">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='14-LookupExercise' class='slide'>
+			<!--startblock-->
+<h2>Задача: Обратный индекс</h2>
+<p>Обратный индекс — это структура данных, часто использующаяся в задачах 
+полнотекстового поиска нужного документа в большой базе документов.</p>
+<p>По своей сути обратный индекс напоминает индекс в конце бумажных энциклопедий, 
+где для каждого ключевого слова указан список страниц, где оно встречается.</p>
+<p>Вам требуется по списку документов построить обратный индекс.</p>
+<p>Документ определен так:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>public class Document
+{
+	public int Id;
+	public string Text;
+}</textarea>
+			<!--startblock-->
+<p>Обратный индекс в нашем случае — это словарь <code>IDictionary&lt;string, HashSet&lt;int&gt;&gt;</code>, 
+ключем в котором является слово, а значением — хэштаблица, содержащая идентификаторы
+всех документов, содержащих это слово.</p>
+			<!--endblock-->
+    
+
+		<p>Допишите решение в окне ниже:</p>
+	<textarea class='code code-exercise'>public IDictionary&lt;string, HashSet&lt;int&gt;&gt; BuildInvertedIndex(Document[] documents)
+{
+	// ваш код
+}
+
+[Test]
+public void TestInvertedIndex()
+{
+	Document[] docs =
+	{
+		new Document {Id = 1, Text = &quot;Hello world!&quot;},
+		new Document {Id = 2, Text = &quot;World, world, world... Just words...&quot;},
+		new Document {Id = 3, Text = &quot;Words — power&quot;},
+		new Document {Id = 4, Text = &quot;&quot;},
+	};
+	var index = BuildInvertedIndex(docs);
+
+	Assert.That(index[&quot;world&quot;], Is.EquivalentTo(new[] {1, 2}));
+	Assert.That(index[&quot;words&quot;], Is.EquivalentTo(new[] {2, 3}));
+	Assert.That(index[&quot;power&quot;], Is.EquivalentTo(new[] {3}));
+	Assert.That(!index.ContainsKey(&quot;&quot;));
+}</textarea>
+	<div class="panel-group" id="hints-accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint1" data-target="#hint1">
+							Подсказка 1
+						</a>
+					</h4>
+				</div>
+				<div id="hint1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Сегодня никаких подсказок!</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint2" data-target="#hint2">
+							Подсказка 2
+						</a>
+					</h4>
+				</div>
+				<div id="hint2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Да, задача сложная, но тем не менее подсказок не будет!</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint3" data-target="#hint3">
+							Подсказка 3
+						</a>
+					</h4>
+				</div>
+				<div id="hint3" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Ну правда, пора научиться решать подобные задачи без подсказок!</p>
+
+					</div>
+				</div>
+			</div>
+	</div>
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="13-Lookup.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="15-AggregateFunctions.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

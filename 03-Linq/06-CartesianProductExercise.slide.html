@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-exercise">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='06-CartesianProductExercise' class='slide'>
+			<!--startblock-->
+<h2>Задача: Соседи</h2>
+<p>Одно из не совсем очевидных применений <code>SelectMany</code> — это вычисление декартова произвдеения двух множеств.
+Попробуйте применить это знание при решении следующей задачи:</p>
+<p>Дана точка. Нужно вернуть <code>HashSet&lt;Point&gt;</code>, содержащий всех соседей этой точки в смысле 8-связности.</p>
+			<!--endblock-->
+    
+
+		<p>Допишите решение в окне ниже:</p>
+	<textarea class='code code-exercise'>public HashSet&lt;Point&gt; GetNeighbours(Point p)
+{
+	int[] d = {-1, 0, 1};
+	return ...
+}
+
+[Test]
+public void Test()
+{
+	var neighbours = GetNeighbours(new Point(1, 2));
+
+	Assert.That(
+		neighbours,
+		Is.EquivalentTo(new[]
+		{
+			new Point(0, 1), new Point(0, 2), new Point(0, 3),
+			new Point(1, 1), new Point(1, 3),
+			new Point(2, 1), new Point(2, 2), new Point(2, 3),
+		}));
+}</textarea>
+	<div class="panel-group" id="hints-accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint1" data-target="#hint1">
+							Подсказка 1
+						</a>
+					</h4>
+				</div>
+				<div id="hint1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Декартово произведение множества {-1, 0, 1} на себя даст все возможные относительные координаты соседей</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint2" data-target="#hint2">
+							Подсказка 2
+						</a>
+					</h4>
+				</div>
+				<div id="hint2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Используйте вызов Select внутри вызова SelectMany</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint3" data-target="#hint3">
+							Подсказка 3
+						</a>
+					</h4>
+				</div>
+				<div id="hint3" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Метода ToHashSet не существует, однако у класса HashSet<T> есть конструктор, принимающие последовательность</p>
+
+					</div>
+				</div>
+			</div>
+	</div>
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="05-SelectManyExercise.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="07-SortAndDistinct.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

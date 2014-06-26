@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-exercise">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='10-SortTuplesExercise' class='slide'>
+			<!--startblock-->
+<h2>Сравнение кортежей</h2>
+<p>Ещё одно полезное свойство кортежей — по умолчанию они сравниваются поэлементно.
+Используя этот факт, решите следующую задачу:</p>
+<h2>Задача: Словарь текста 2</h2>
+<p>Дан текст, нужно составить список всех встречающихся в тексте слов, 
+упорядоченный сначала по длинне слова, а потом лексикографически.</p>
+<p>Запрещено использовать <code>ThenBy</code> и <code>ThenByDescending</code>.</p>
+			<!--endblock-->
+    
+
+		<p>Допишите решение в окне ниже:</p>
+	<textarea class='code code-exercise'>public List&lt;string&gt; GetSortedWords(string text)
+{
+	// ваше решение
+}
+
+[Test]
+public void Test()
+{
+	var words = GetSortedWords(&quot;you?! or not you... who knows?&quot;);
+	Assert.That(words, Is.EqualTo(new[] {&quot;or&quot;, &quot;not&quot;, &quot;who&quot;, &quot;you&quot;, &quot;knows&quot;}));
+}</textarea>
+	<div class="panel-group" id="hints-accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint1" data-target="#hint1">
+							Подсказка 1
+						</a>
+					</h4>
+				</div>
+				<div id="hint1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p><code>Regex.Split</code> — позволяет задать регулярное выражение для разделителей слов и получить список слов.</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint2" data-target="#hint2">
+							Подсказка 2
+						</a>
+					</h4>
+				</div>
+				<div id="hint2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p><code>Regex.Split(s, @&quot;\W+&quot;)</code> разбивает текст на слова</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint3" data-target="#hint3">
+							Подсказка 3
+						</a>
+					</h4>
+				</div>
+				<div id="hint3" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Пустая строка не является корректным словом</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint4" data-target="#hint4">
+							Подсказка 4
+						</a>
+					</h4>
+				</div>
+				<div id="hint4" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p><code>keySelector</code> в <code>OrderBy</code> должен возвращать ключ сортировки. Этот ключ может быть кортежем.</p>
+
+					</div>
+				</div>
+			</div>
+	</div>
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="09-Tuple.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="11-Grouping.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

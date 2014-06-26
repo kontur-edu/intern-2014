@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-theory">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='01-SelectWhereToArray' class='slide'>
+			<!--startblock-->
+<h2>Основы Linq</h2>
+<p>В основе Linq лежит интерфейс <strong>последовательности</strong> <code>IEnumerable&lt;T&gt;</code>. 
+Последовательность — это абстракция чего-то, что можно начать перечислять, 
+и переходить от текущего элемента к следующему пока последовательность не закончится.</p>
+<p>Массивы, <code>List</code>, <code>Dictionary</code>, <code>HashSet</code> — все эти коллекции реализуют интерфейс последовательности.</p>
+<p>Для всех <code>IEnumerable</code> в пространстве имен <code>System.Linq</code> определено множество полезных extension-методов. </p>
+<p>Начнем знакомство с самыми основными. (если вы с ними уже знакомы — сразу переходите к упражнению)</p>
+<h2>Фильтрация и преобразование</h2>
+<p><code>Where</code> используется для фильтрации перечисляемого. Он принимает в качестве параметра функцию-предикат 
+и возвращает новое перечисляемое, состоящее только из тех элементов исходного перечисляемого, на которых предикат вернул true.</p>
+<p>Вот его полная сигнатура:</p>
+<p><code>IEnumerable&lt;T&gt; Where(this IEnumerable&lt;T&gt; items, Func&lt;T, bool&gt; predicate)</code></p>
+<p><code>Select</code> используется для поэлементного преобразования перечисляемого. Он принимает в качестве параметра преобразующую функцию 
+и возвращает новое перечисляемое, полученное применением этой функции к каждому элементу исходного перечисляемого.</p>
+<p><code>IEnumerable&lt;R&gt; Select(this IEnumerable&lt;T&gt; items, Func&lt;T, R&gt; map)</code></p>
+<p><code>Take</code> обрезает последовательность, после указанного количества элементов.</p>
+<p><code>IEnumerable&lt;T&gt; Take(this IEnumerable&lt;T&gt; items, int count)</code></p>
+<p><code>Skip</code> обрезает последовательность, пропуская указанное количество элементов сначала.</p>
+<p><code>IEnumerable&lt;T&gt; Skip(this IEnumerable&lt;T&gt; items, int count)</code></p>
+<p><code>ToArray</code> и <code>ToList</code> используются для преобразования <code>IEnumerable&lt;T&gt;</code> в массив <code>T[]</code> или в <code>List&lt;T&gt;</code>, соответственно.</p>
+<p>Ещё раз отметим, что все эти методы не меняют исходную коллекцию, а возвращают новую последовательность.</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+IEnumerable&lt;int&gt; even = numbers.Where(x =&gt; x%2 == 0);
+IEnumerable&lt;int&gt; squares = even.Select(x =&gt; x*x);
+IEnumerable&lt;int&gt; squaresWithoutOne = squares.Skip(1);
+IEnumerable&lt;int&gt; secondAndThirdSquares = squaresWithoutOne.Take(2);
+int[] result = secondAndThirdSquares.ToArray();
+
+Assert.That(result, Is.EqualTo(new[] {16, 36}));</textarea>
+			<!--startblock-->
+<p>Несколько последовательных действий можно объединять в одну цепочку вызовов. 
+Такой прием называется <a href="http://en.wikipedia.org/wiki/Method_chaining" target="_blank">Method Chaining</a>.
+Для улучшения читаемости вашего кода лучше каждый вызов метода помещать в отдельную строку.</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>Assert.That(
+	new[] {1, 2, 3, 4, 5, 6, 7, 8, 9}
+		.Where(x =&gt; x%2 == 0)
+		.Select(x =&gt; x*x)
+		.Skip(1)
+		.Take(2)
+		.ToArray(),
+	Is.EqualTo(new[] {16, 36}).AsCollection);</textarea>
+			<!--startblock-->
+<p>Method chaining делает код компактнее, но скрывает информацию о типах и семантике промежуточных значений. 
+Иногда всё же стоит оставлять вспомогательные переменные, чтобы сделать код более читаемым.</p>
+<p>В коде ниже имя переменной <code>girls</code> помогает понять неочевидную задумку автора, который (наивно) считает, 
+что все женские имена заканчиваются на 'a':</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>var people = new[] {&quot;Pavel&quot;, &quot;&quot;, &quot;Yuriy&quot;, null, &quot;Michail&quot;, &quot;Aleksey&quot;, &quot;Dasha&quot;, &quot;Irina&quot;}
+	.Where(name =&gt; !string.IsNullOrEmpty(name));
+var girls = people
+	.Where(name =&gt; name[name.Length - 1] == &#39;a&#39;);
+
+Assert.That(girls, Is.EqualTo(new[] {&quot;Dasha&quot;, &quot;Irina&quot;}).AsCollection);</textarea>
+    
+
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+									<a id="NextLink" class="slide-nav-link" href="02-ReadNumbersExcercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

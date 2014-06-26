@@ -1,0 +1,33 @@
+.course-header {
+    background-color: #6f5499;
+    color: white;
+    padding: 10px 15px;
+}
+
+.slide-nav {
+    margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+.slide-nav-link {
+    margin-right: 30px;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    line-height: 1.3em;
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+
+.CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+    height: auto;
+}

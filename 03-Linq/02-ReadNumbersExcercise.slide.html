@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-exercise">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='02-ReadNumbersExcercise' class='slide'>
+			<!--startblock-->
+<h2>Задача: Чтение из файла</h2>
+<p>Linq удобно использовать для чтения из файла и разбора простых текстовых формат. Особенно удобно сочетать Linq с методом <code>File.ReadLines(filename)</code>.</p>
+<p>Предположим в файле filename в каждая строка либо пустая, либо содержит одно целое число. 
+Нужно прочитать числа из файла в массив. Решите задачу в один LINQ-запрос.</p>
+<h3>Пример файла</h3>
+<pre><code>1
+
+-3
+0
+</code></pre>
+
+<p>Решение этой задачи будет использоваться следующим образом:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>int[] numbers = ParseNumbers(File.ReadLines(&quot;numbers.txt&quot;));</textarea>
+			<!--startblock-->
+<h3>Краткая справка</h3>
+<ul>
+<li><code>items.Where(item =&gt; isGoodItem(item))</code> — фильтрация последовательности</li>
+<li><code>items.Select(item =&gt; convert(item))</code> — поэлементное преобразование последовательности</li>
+<li><code>items.ToArray()</code> — преобразование последовательности в массив</li>
+</ul>
+			<!--endblock-->
+    
+
+		<p>Допишите решение в окне ниже:</p>
+	<textarea class='code code-exercise'>public int[] ParseNumbers(IEnumerable&lt;string&gt; lines)
+{
+	return lines
+		.Where(...)
+		.Select(...)
+		...
+}
+
+[Test]
+public void Test()
+{
+	int[] actualNumbers = ParseNumbers(new[] {&quot;&quot;, &quot;1&quot;, &quot;2&quot;, &quot;&quot;, &quot;42&quot;});
+	Assert.That(
+		actualNumbers,
+		Is.EqualTo(new[] {1, 2, 42}).AsCollection);
+}</textarea>
+	<div class="panel-group" id="hints-accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint1" data-target="#hint1">
+							Подсказка 1
+						</a>
+					</h4>
+				</div>
+				<div id="hint1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p><code>int.Parse</code> преобразует строку в целое число.</p>
+
+					</div>
+				</div>
+			</div>
+	</div>
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="01-SelectWhereToArray.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="03-ReadPointsExcercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

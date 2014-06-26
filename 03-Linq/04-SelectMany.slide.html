@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-theory">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='04-SelectMany' class='slide'>
+			<!--startblock-->
+<h2>SelectMany</h2>
+<p>Этот метод несколько менее очевиден, чем предыдущие, однако он довольно часто пригождается в самых разных задачах.</p>
+<p><code>IEnumerable&lt;R&gt; SelectMany(this IEnumerable&lt;T&gt; items, Func&lt;T, IEnumerable&lt;R&gt;&gt; f)</code></p>
+<p>В качестве аргумента она принимает функцию, преобразующий каждый элемент исходной последовательности
+в новую последовательность. А результатом работы является конкатинация всех полученных последовательностей.</p>
+<p>Следующий пример пояснит работу этого метода:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>string[] words = {&quot;ab&quot;, &quot;&quot;, &quot;c&quot;, &quot;de&quot;};
+IEnumerable&lt;char&gt; letters = words.SelectMany(w =&gt; w.ToCharArray());
+Assert.That(letters, Is.EqualTo(new[] {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}).AsCollection);</textarea>
+			<!--startblock-->
+<p>Впрочем строка уже сама по себе является последовательностью символов и реализует интерфейс <code>IEnumerable&lt;char&gt;</code>,
+поэтому вызов <code>ToCharArray</code> на самом деле лишний.</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>string[] words = {&quot;ab&quot;, &quot;&quot;, &quot;c&quot;, &quot;de&quot;};
+IEnumerable&lt;char&gt; letters = words.SelectMany(w =&gt; w);
+Assert.That(letters, Is.EqualTo(new[] {&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;}).AsCollection);</textarea>
+    
+
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="03-ReadPointsExcercise.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="05-SelectManyExercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

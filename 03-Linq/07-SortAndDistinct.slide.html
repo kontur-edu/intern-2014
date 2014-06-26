@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-theory">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='07-SortAndDistinct' class='slide'>
+			<!--startblock-->
+<h2>OrderBy и Distinct</h2>
+<p>Для сортировки последовательности в Linq имеется четыре метода:</p>
+<pre><code>IOrderedEnumerable&lt;T&gt; OrderBy&lt;T&gt;(this IEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IOrderedEnumerable&lt;T&gt; OrderByDescending&lt;T&gt;(this IEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IOrderedEnumerable&lt;T&gt; ThenBy&lt;T&gt;(this IOrderedEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IOrderedEnumerable&lt;T&gt; ThenByDescending&lt;T&gt;(this IOrderedEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+</code></pre>
+
+<p>Первые две дают на выходе последовательность, упорядоченную по возрастанию/убыванию ключей.
+А <code>keySelector</code> — это как раз функция, которая каждому элементу последовательности ставит
+в соответствие некоторый ключ, по которому его и нужно отсортировать.</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>var names = new[] {&quot;Pavel&quot;, &quot;Alexander&quot;, &quot;Anna&quot;};
+
+IOrderedEnumerable&lt;string&gt; sorted = names.OrderBy(n =&gt; n.Length);
+
+Assert.That(sorted, Is.EqualTo(new[] {&quot;Anna&quot;, &quot;Pavel&quot;, &quot;Alexander&quot;}));</textarea>
+			<!--startblock-->
+<p>Если при равенстве ключей вы хотите отсотрировать элементы по другому критерию, 
+на помощь приходит метод ThenBy.</p>
+<p>Например, в следующем примере все имена сортируются по убыванию длин, а при равных длинах — лексикографически.</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>var names = new[] {&quot;Pavel&quot;, &quot;Alexander&quot;, &quot;Irina&quot;};
+var sorted = names
+	.OrderByDescending(name =&gt; name.Length)
+	.ThenBy(n =&gt; n);
+Assert.That(sorted, Is.EqualTo(new[] {&quot;Alexander&quot;, &quot;Irina&quot;, &quot;Pavel&quot;}).AsCollection);</textarea>
+			<!--startblock-->
+<p>Чтобы убрать из последовательности все повторяющиеся элементы, можно воспользоваться функцией <code>Distinct</code>.</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>var numbers = new[] {1, 2, 3, 3, 1, 1,};
+var uniqueNumbers = numbers.Distinct();
+Assert.That(uniqueNumbers.Count(), Is.EqualTo(3));</textarea>
+    
+
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="06-CartesianProductExercise.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="08-SortExercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-exercise">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='12-WordsFrequenciesExercise' class='slide'>
+			<!--startblock-->
+<h2>Задача: Частотный словарь текста</h2>
+<p>Дан текст, нужно вывести count наиболее часто встречающихся в тексте слов, вместе с их частотой.</p>
+<p>Напомним сигнатуры всех Linq-методов, которые вам понадобятся в этом упражнении:</p>
+<pre><code>IEnumerable&lt;IGrouping&lt;K, T&gt;&gt; GroupBy(this IEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IEnumerable&lt;R&gt; Select(this IEnumerable&lt;T&gt; items, Func&lt;T, R&gt; map)
+IOrderedEnumerable&lt;T&gt; OrderBy&lt;T&gt;(this IEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IOrderedEnumerable&lt;T&gt; OrderByDescending&lt;T&gt;(this IEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IOrderedEnumerable&lt;T&gt; ThenBy&lt;T&gt;(this IOrderedEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IOrderedEnumerable&lt;T&gt; ThenByDescending&lt;T&gt;(this IOrderedEnumerable&lt;T&gt; items, Func&lt;T, K&gt; keySelector)
+IEnumerable&lt;T&gt; Take(this IEnumerable&lt;T&gt; items, int count)
+</code></pre>
+
+			<!--endblock-->
+    
+
+		<p>Допишите решение в окне ниже:</p>
+	<textarea class='code code-exercise'>public Tuple&lt;string, int&gt;[] GetMostFrequentWords(string text, int count)
+{
+	return Regex.Split(text, @&quot;\W+&quot;)
+		.Where(word =&gt; word != &quot;&quot;)
+		// ваш код
+		.ToArray();
+}
+
+[Test]
+public void Test()
+{
+	var words = GetMostFrequentWords(&quot;You?! Or not you... who knows?&quot;, 2);
+	Assert.That(words[0], Is.EqualTo(Tuple.Create(&quot;you&quot;, 2)));
+	Assert.That(words[1], Is.EqualTo(Tuple.Create(&quot;knows&quot;, 1)));
+
+	words = GetMostFrequentWords(&quot;&quot;, 100500);
+	Assert.That(words, Is.Empty);
+}</textarea>
+	<div class="panel-group" id="hints-accordion">
+	</div>
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="11-Grouping.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="13-Lookup.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

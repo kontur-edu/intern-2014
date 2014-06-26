@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-theory">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='11-Grouping' class='slide'>
+			<!--startblock-->
+<h2>Группировка</h2>
+<p>Linq содержит несколько методов группировки элементов последовательности в группы по некоторому признаку.
+Основной способ группировки — это метод <code>GroupBy</code>. Вот его полная сигнатура:</p>
+<p><code>IEnumerable&lt;IGrouping&lt;TKey, TItem&gt;&gt; GroupBy(Func&lt;TItem, TKey&gt; keySelector)</code></p>
+<p><code>keySelector</code> по каждому элементу последовательности получает значение ключа. 
+Все элементы последовательности с одинаковым значением ключа образуют группу.</p>
+<p>Пример ниже показывает как можно разбить список имен в группы по первой букве имени:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>string[] names = {&quot;Pavel&quot;, &quot;Peter&quot;, &quot;Andrew&quot;, &quot;Anna&quot;, &quot;Alice&quot;, &quot;John&quot;};
+IGrouping&lt;char, string&gt;[] groups = names
+	.GroupBy(name =&gt; name[0])
+	.OrderBy(group =&gt; group.Key)
+	.ToArray();
+// Каждая группа IGrouping реализует интерфейс IEnumerable:
+string[] firstGroup = groups[0].OrderBy(name =&gt; name).ToArray();
+Assert.That(firstGroup, Is.EqualTo(new[] {&quot;Alice&quot;, &quot;Andrew&quot;, &quot;Anna&quot;}).AsCollection);
+
+// Кроме того у группы есть поле Key, в котором хранится общий для этой группы ключ группировки
+char firstKey = groups[0].Key;
+Assert.That(firstKey, Is.EqualTo(&#39;A&#39;));</textarea>
+			<!--startblock-->
+<p>В некотром смысле <code>GroupBy</code> — это метод противоположный по действию методу <code>SelectMany</code>.
+<code>GroupBy</code> создает группы, а <code>SelectMany</code> из списка групп делает плоский список.</p>
+<p><code>SelectMany</code> после <code>GroupBy</code> не поменяют состав последовательности, но могут изменить порядок следования элементов:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>string[] names = {&quot;Pavel&quot;, &quot;Peter&quot;, &quot;Andrew&quot;, &quot;Anna&quot;, &quot;Alice&quot;, &quot;John&quot;};
+var names2 = names
+	.GroupBy(name =&gt; name[0])
+	.SelectMany(group =&gt; group);
+
+// Is.Equivalent игнорирует порядок элементов при сравнении коллекций:
+Assert.That(names2, Is.EquivalentTo(names));</textarea>
+    
+
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="10-SortTuplesExercise.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="12-WordsFrequenciesExercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

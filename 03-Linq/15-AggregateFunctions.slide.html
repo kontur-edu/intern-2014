@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-theory">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='15-AggregateFunctions' class='slide'>
+			<!--startblock-->
+<h2>Функции аггрегирования</h2>
+<p>В Linq есть удобные методы для вычисления минимума, максимума, среднего и количества элементов в последовательности.</p>
+<p>Вот все они в действии:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>IEnumerable&lt;int&gt; nums = new int[] {8, 9, 0, 1, 2, 3, 4, 5, 6, 7};
+string[] words = {&quot;hello&quot;, &quot;kittie&quot;};
+
+Assert.That(nums.Count(), Is.EqualTo(10));
+
+Assert.That(nums.Min(), Is.EqualTo(0));
+
+Assert.That(words.Select(word =&gt; word.Length).Max(), Is.EqualTo(6));
+// Можно записать строку выше короче, если воспользоваться другой перегрузкой агрегатной функции.
+// Подобные перегрузки есть у всех аггрегатных функций
+Assert.That(words.Max(word =&gt; word.Length), Is.EqualTo(6));
+
+Assert.That(nums.Average(n =&gt; n*n), Is.EqualTo(28.5));</textarea>
+			<!--startblock-->
+<p>Все эти методы для того, чтобы вычислить результат полностью обходят все элементы коллекции.
+Исключение составляет только метод <code>Count</code>. Если последовательность на самом деле реализует интерфейс ICollection
+(у коготорого у самого есть свойство Count), то Linq-метод Count() вернет значение свойства Count.</p>
+<p>Благодаря этой оптимизации, временная сложность работы Linq-метода Count() 
+на массивах, списках, хэштаблицах и многих других структурах данных — O(1).</p>
+			<!--endblock-->
+			<!--startblock-->
+<p>Есть ещё две полезные функции: All и Any, которые проверяют, выполняется ли заданный предикат для всех элементов
+последовательности или хотя бы для одного элемента соответственно.</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>int[] numbers = {1, 2, 6, 2, 8, 0, 10, 6, 1, 2};
+
+Assert.That(numbers.All(n =&gt; n &gt; 0), Is.EqualTo(true));
+Assert.That(numbers.All(n =&gt; n%2 == 0), Is.EqualTo(false));
+
+Assert.That(numbers.Any(n =&gt; n == 0), Is.EqualTo(true));
+Assert.That(numbers.Any(n =&gt; n &lt; 0), Is.EqualTo(false));</textarea>
+    
+
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="14-LookupExercise.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="16-AggregateExercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

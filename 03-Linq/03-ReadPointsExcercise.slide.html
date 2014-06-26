@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-exercise">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='03-ReadPointsExcercise' class='slide'>
+			<!--startblock-->
+<h2>Задача: Чтение из файла 2</h2>
+<p>В файле filename в каждой строке написаны две координаты точки, разделенные пробелом.
+Прочитайте файл в массив точек.
+Решите задачу в один LINQ-запрос. Постарайтесь не использовать функцию преобразования строки в число более одного раза.</p>
+<h3>Пример файла</h3>
+<pre><code>1 -2
+-3 4
+0 2
+</code></pre>
+
+<p>Написанная вами функция в дальнейшем может быть использована, например, вот так:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>List&lt;Point&gt; points = ParsePoints(File.ReadLines(&quot;points.txt&quot;));</textarea>
+			<!--startblock-->
+<h3>Краткая справка</h3>
+<ul>
+<li><code>IEnumerable&lt;R&gt; Select(this IEnumerable&lt;T&gt; items, Func&lt;T, R&gt; map)</code></li>
+<li><code>List&lt;T&gt; ToList(this IEnumerable&lt;T&gt; items)</code></li>
+</ul>
+			<!--endblock-->
+    
+
+		<p>Допишите решение в окне ниже:</p>
+	<textarea class='code code-exercise'>public List&lt;Point&gt; ParsePoints(IEnumerable&lt;string&gt; lines)
+{
+	return lines
+		.Select(...)
+		...
+}
+
+[Test]
+public void Test_ReadPoints()
+{
+	List&lt;Point&gt; actualPoints = ParsePoints(new[] {&quot;1 -2&quot;, &quot;-3 4&quot;});
+	Assert.That(
+		actualPoints,
+		Is.EqualTo(new[] {new Point(1, -2), new Point(-3, 4)}).AsCollection);
+}</textarea>
+	<div class="panel-group" id="hints-accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint1" data-target="#hint1">
+							Подсказка 1
+						</a>
+					</h4>
+				</div>
+				<div id="hint1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>string.Split — разбивает строку на части по разделителю</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint2" data-target="#hint2">
+							Подсказка 2
+						</a>
+					</h4>
+				</div>
+				<div id="hint2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>int.Parse преобразует строку в целое число.</p>
+
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parentt="#hints-accordion" href="#hint3" data-target="#hint3">
+							Подсказка 3
+						</a>
+					</h4>
+				</div>
+				<div id="hint3" class="panel-collapse collapse">
+					<div class="panel-body">
+						<p>Каждую строку нужно преобразовать в точку. Преобразование — это дело для метода Select. </p>
+
+					</div>
+				</div>
+			</div>
+	</div>
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="02-ReadNumbersExcercise.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="04-SelectMany.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>

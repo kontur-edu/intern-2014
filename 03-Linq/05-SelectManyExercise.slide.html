@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>
+		Linq-интенсив на практических задачах
+	</title>
+	<link rel="stylesheet" href="./Content/bootstrap.min.css">
+	<link rel="stylesheet" href="./Content/codemirror.css">
+	<link rel="stylesheet" href="./Content/cobalt.css">
+	<link rel="stylesheet" href="./Content/lessons.css">
+</head>
+<body class="slide-exercise">
+	<div class="course-header">
+		<div class="container">
+			<div class="row">
+				<h1>Linq-интенсив на практических задачах</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			﻿<div id='05-SelectManyExercise' class='slide'>
+			<!--startblock-->
+<h2>Задача: SelectMany</h2>
+<p>Вам дан список всех классов в школе. Нужно получить спиок всех учащихся всех классов.</p>
+<p>Учебный класс определен так:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>public class Classroom
+{
+	public List&lt;string&gt; Students = new List&lt;string&gt;();
+}</textarea>
+			<!--startblock-->
+<p>Без использования Linq, решение могло бы выглядеть так:</p>
+			<!--endblock-->
+			<textarea class='code code-sample'>var allStudents = new List&lt;string&gt;();
+foreach (var classroom in classes)
+{
+	foreach (var student in classroom.Students)
+	{
+		allStudents.Add(student);
+	}
+}
+return allStudents.ToArray();</textarea>
+			<!--startblock-->
+<p>Напишите решение этой задачи с помощью Linq в одно выражение.</p>
+<h3>Краткая справка</h3>
+<ul>
+<li><code>IEnumerable&lt;R&gt; SelectMany(this IEnumerable&lt;T&gt; items, Func&lt;T, IEnumerable&lt;R&gt;&gt; f)</code></li>
+<li><code>T[] ToArray(this IEnumerable&lt;T&gt; items)</code></li>
+</ul>
+			<!--endblock-->
+    
+
+		<p>Допишите решение в окне ниже:</p>
+	<textarea class='code code-exercise'>public string[] GetAllStudents(Classroom[] classes)
+{
+	// пишите решение тут
+}
+
+[Test]
+public void Test()
+{
+	Classroom[] classes =
+	{
+		new Classroom {Students = {&quot;Pavel&quot;, &quot;Ivan&quot;, &quot;Petr&quot;},},
+		new Classroom {Students = {&quot;Anna&quot;, &quot;Ilya&quot;, &quot;Vladimir&quot;},},
+		new Classroom {Students = {&quot;Bulat&quot;, &quot;Alex&quot;, &quot;Galina&quot;},}
+	};
+
+	var allStudents = GetAllStudents(classes);
+
+	Assert.That(
+		allStudents,
+		Is.EquivalentTo(new[]
+		{
+			&quot;Pavel&quot;, &quot;Ivan&quot;, &quot;Petr&quot;, &quot;Anna&quot;, &quot;Ilya&quot;,
+			&quot;Vladimir&quot;, &quot;Bulat&quot;, &quot;Alex&quot;, &quot;Galina&quot;
+		}));
+}</textarea>
+	<div class="panel-group" id="hints-accordion">
+	</div>
+</div>
+		</div>
+		<div class="row">
+			<div class="slide-nav">
+					<a id="PrevLink" class="slide-nav-link" href="04-SelectMany.slide.html">← Ctrl</a>
+									<a id="NextLink" class="slide-nav-link" href="06-CartesianProductExercise.slide.html">Ctrl →</a>
+			</div>
+		</div>
+	</div>
+	<script src="./Scripts/jquery-1.9.0.min.js"></script>
+	<script src="./Scripts/bootstrap.min.js"></script>
+	<script src="./Scripts/codemirror.js"></script>
+	<script src="./Scripts/clike.js"></script>
+	<script src="./Scripts/navigate.js"></script>
+	<script>
+		function codeMirrorClass(c, theme) {
+			var codes = document.getElementsByClassName(c);
+			for (var i = 0; i < codes.length; i++)
+				CodeMirror.fromTextArea(codes[i],
+				{
+					mode: "text/x-csharp",
+					lineNumbers: true,
+					theme: theme,
+					indentWithTabs: true,
+					tabSize: 4,
+					indentUnit: 4,
+				});
+		}
+
+		codeMirrorClass("code-exercise", "cobalt");
+		codeMirrorClass("code-sample", "default");
+	</script>
+</body>
+</html>
