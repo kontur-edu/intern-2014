@@ -1,5 +1,5 @@
-Школа стажеров разработчиков СКБ Контур 2014
-===
+Школа стажеров разработчиков
+---
 
 Короткая ссылка на этот репозиторий: http://bit.ly/intern-14
 
@@ -12,4 +12,3 @@
 * [Learn git branching game](http://pcottle.github.io/learnGitBranching/)
 * Книга [Чистый код. Роберт Мартин](http://www.ozon.ru/context/detail/id/5011068/)
 * Free e-book [Threading in C#](http://www.albahari.com/threading/)
-
