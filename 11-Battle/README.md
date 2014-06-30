@@ -18,7 +18,7 @@
 
 ####Раунд 1. Четверг, 23-30
 
-1. На карте будет три бота: ваш бот, JuryBots.Evil, JuryBots.Observer. JuryBots.Evil должен умереть.
+На карте будет три бота: ваш бот, JuryBots.Evil, JuryBots.Observer. JuryBots.Evil должен умереть.
 
 ####Раунд 2. Пятница, 11-30
 1. На карте будет три бота: ваш бот, JuryBots.SpinEvil, JuryBots.Observer. JuryBots.SpinEvil должен умереть.
