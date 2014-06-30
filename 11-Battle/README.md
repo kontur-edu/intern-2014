@@ -44,4 +44,3 @@
 1. [RoboWiki](http://robowiki.net/wiki/Robocode_Basics) — большой сборник полезных знаний.
 2. [Неплохая вводная презентация](http://www.slideshare.net/nguyenkhang90/robocode-basics?qid=d0c20c9b-77e4-4a03-9242-8511cb95d0cd&v=qf1&b=&from_search=3)
 3. Изучайте исходный код других роботов
-4. анализируйте реплеи прошедших раундов
