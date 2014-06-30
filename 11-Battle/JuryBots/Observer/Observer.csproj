@@ -7,7 +7,7 @@
     <ProjectGuid>{00C01B42-8EDF-4D3B-803F-672158BD613C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Observer</RootNamespace>
+    <RootNamespace>JuryBots</RootNamespace>
     <AssemblyName>Observer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

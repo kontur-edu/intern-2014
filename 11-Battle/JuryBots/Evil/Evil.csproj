@@ -7,7 +7,7 @@
     <ProjectGuid>{C432B29F-ABE4-49FA-881F-E77DDD6CD899}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Evil</RootNamespace>
+    <RootNamespace>JuryBots</RootNamespace>
     <AssemblyName>Evil</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

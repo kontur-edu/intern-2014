@@ -20,7 +20,7 @@ namespace JuryBots
 	///   <p />
 	///   Sits still.  Tracks and fires at the nearest robot it sees
 	/// </summary>
-	public class TrackEvil : Robot
+	public class EvilTrack : Robot
 	{
 		/// <summary>
 		///   TrackFire's run method

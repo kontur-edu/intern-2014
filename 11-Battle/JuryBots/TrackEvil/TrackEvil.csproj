@@ -7,7 +7,7 @@
     <ProjectGuid>{73057F79-D60C-40BA-9228-3518230D8A32}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TrackEvil</RootNamespace>
+    <RootNamespace>JuryBots</RootNamespace>
     <AssemblyName>TrackEvil</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
