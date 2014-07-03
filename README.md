@@ -12,3 +12,4 @@
 * [Learn git branching game](http://pcottle.github.io/learnGitBranching/)
 * Книга [Чистый код. Роберт Мартин](http://www.ozon.ru/context/detail/id/5011068/)
 * Free e-book [Threading in C#](http://www.albahari.com/threading/)
+* Free e-book [Seven Databases in Seven Weeks](http://it-ebooks.info/book/866/)
