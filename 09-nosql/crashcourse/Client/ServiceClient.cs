@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using Client.Parameters;
+using SKBKontur.WebPersonal.Core.Serialization;
 
 namespace Client
 {
@@ -8,9 +9,11 @@ namespace Client
     {
         private readonly Func<IPEndPoint, IServiceProxy> createProxy;
 
-        public ServiceClient(Func<IPEndPoint, IServiceProxy> createProxy)
+
+        public ServiceClient()
         {
-            this.createProxy = createProxy;
+            var jsonSerializer = new JsonSerializer();
+            createProxy = ipEndPoint => new ServiceProxy(ipEndPoint, jsonSerializer);
         }
 
         public void Write(string key, Data value, IPEndPoint endPoint)

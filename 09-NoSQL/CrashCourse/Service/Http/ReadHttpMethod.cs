@@ -9,21 +9,21 @@ namespace Service.Http
     public class ReadHttpMethod : IHttpMethod
     {
         private readonly Disk disk;
-        private readonly IGroboSerializer groboSerializer;
+        private readonly IJsonSerializer jsonSerializer;
 
-        public ReadHttpMethod(Disk disk, IGroboSerializer groboSerializer)
+        public ReadHttpMethod(Disk disk, IJsonSerializer jsonSerializer)
         {
             this.disk = disk;
-            this.groboSerializer = groboSerializer;
+            this.jsonSerializer = jsonSerializer;
         }
 
         #region IHttpMethod Members
 
         public void Process(HttpContext context)
         {
-            var readParameters = groboSerializer.Deserialize<ReadParameters>(context.Request.Body);
+            var readParameters = jsonSerializer.Deserialize<ReadParameters>(context.Request.Body);
             var result = disk.Read(readParameters.Key);
-            context.Response.BodyStream.WriteBytes(groboSerializer.Serialize(result));
+            context.Response.BodyStream.WriteBytes(jsonSerializer.Serialize(result));
         }
 
         #endregion

@@ -18,3 +18,5 @@ serviceName = print
 
 # Признак того, что сервис запускается в отладочном режиме
 debug = true
+
+endpoints =

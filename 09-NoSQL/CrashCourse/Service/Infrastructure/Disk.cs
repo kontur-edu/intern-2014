@@ -1,10 +1,5 @@
 using System.Collections.Generic;
-using System.Net;
-using System.Threading;
-using System.Threading.Tasks;
-using Client;
 using Client.Parameters;
-using SKBKontur.WebPersonal.Core.ApplicationCommon;
 
 namespace Service.Infrastructure
 {
@@ -25,39 +20,17 @@ namespace Service.Infrastructure
             }
         }
 
-        public void Write(string key, Data value)
+        public bool Write(string key, Data value)
         {
             lock (storage)
             {
-                if (storage.ContainsKey(key) && value.CompareTo(storage[key]) > 0)
+                if (!storage.ContainsKey(key) || value.CompareTo(storage[key]) > 0)
+                {
                     storage[key] = value;
+                    return true;
+                }
             }
-        }
-    }
-
-    public class Replicator
-    {
-        private readonly IServiceClient serviceClient;
-        private readonly IPEndPoint[] endpoints;
-
-        public Replicator(IServiceClient serviceClient, IApplicationSettings applicationSettings)
-        {
-            endpoints = applicationSettings.GetIPEndpointsArray("endpoints");
-            this.serviceClient = serviceClient;
-        }
-
-        public void Replicate(string key, Data value)
-        {
-            Task.Run(() => ReplicateInternal(key, value));
-        }
-
-        private void ReplicateInternal(string key, Data value)
-        {
-            foreach (var endPoint in endpoints)
-            {
-                Thread.Sleep(5000);
-                serviceClient.Write(key, value, endPoint);
-            }
+            return false;
         }
     }
 }
