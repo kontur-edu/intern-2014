@@ -51,6 +51,8 @@
 Отправлять ботов на проверку нужно на почту pe@kontur.ru с темой robocode.
 Имя класса с роботом является именем команды и менять его не нужно менять между попытками.
 
+[Таблица результатов](https://docs.google.com/spreadsheets/d/1fJgSumzlaUYXHDJ_XkGb6PNpzPwHn__MduEWL9XC6ew/edit#gid=0)
+
 Как изучать?
 
 1. [RoboWiki](http://robowiki.net/wiki/Robocode_Basics) — большой сборник полезных знаний.
