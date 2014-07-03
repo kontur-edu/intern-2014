@@ -1,0 +1,10 @@
+#Battle Properties
+#Sun Jun 29 15:10:21 YEKT 2014
+robocode.battle.sentryBorderSize=100
+robocode.battle.numRounds=10
+robocode.battleField.width=1024
+robocode.battle.gunCoolingRate=0.1
+robocode.battle.rules.inactivityTime=450
+robocode.battle.selectedRobots=BadRobots.BadRobot,BossBot.BossBot,Byte.Byte,MyAwesomeBot.KillEmAll,MyTank.MyTank,Rak31337.Rak31337,Tortuga.TortugaRobot
+robocode.battle.hideEnemyNames=false
+robocode.battleField.height=800
