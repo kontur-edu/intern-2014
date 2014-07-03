@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using Client;
 using Client.Parameters;
+using HighLevelClient;
 using NUnit.Framework;
 
 namespace Tests
@@ -10,46 +11,31 @@ namespace Tests
     [TestFixture]
     public class Test
     {
-        private ServiceClient client;
         private IPEndPoint ipEndPoint1;
         private IPEndPoint ipEndPoint2;
+        private IPEndPoint ipEndPoint3;
+        private EnterpriseClient enterpriseClient;
 
         [SetUp]
         public void SetUp()
         {
-            client = new ServiceClient();
-            ipEndPoint1 = new IPEndPoint(new IPAddress(new byte[] { 127, 0, 0, 1 }), 5088);
-            ipEndPoint2 = new IPEndPoint(new IPAddress(new byte[] { 127, 0, 0, 1 }), 5086);
+            ipEndPoint1 = new IPEndPoint(new IPAddress(new byte[] { 192, 168, 52, 178 }), 5088);
+            ipEndPoint2 = new IPEndPoint(new IPAddress(new byte[] { 192, 168, 52, 178 }), 5086);
+            ipEndPoint3 = new IPEndPoint(new IPAddress(new byte[] { 192, 168, 52, 178 }), 5087);
+            enterpriseClient = new EnterpriseClient(new[] {ipEndPoint1, ipEndPoint2, ipEndPoint3});
         }
 
         [Test]
-        public void Xxx()
+        public void Test1()
         {
-            client.Write("x", new Data{Value = "y", Version = 1}, ipEndPoint1);
-            var res = client.Read("x", ipEndPoint1);
-            Assert.AreEqual("y", res.Value);
-            res = client.Read("x", ipEndPoint2);
-            Assert.IsNull(res);
-            Thread.Sleep(11000);
-            res = client.Read("x", ipEndPoint2);
-            Assert.AreEqual("y", res.Value);
-        }
-
-        [Test]
-        public void Qqq()
-        {
-            client.Write("a", new Data {Value = "b", Version = 3}, ipEndPoint1);
-            var value = client.Read("a", ipEndPoint1);
-            Console.Out.WriteLine(value.Version);
-
-            Thread.Sleep(20000);
-            Console.Out.WriteLine("Start!!!!");
-
-            Console.Out.WriteLine("Sleep 60");
-            Thread.Sleep(60000);
-
-            var anotherValue = client.Read("a", ipEndPoint2);
-            Console.Out.WriteLine(anotherValue.Version);
+            for(var i = 0; i < 10; ++i)
+            {
+                var key = Guid.NewGuid().ToString();
+                var value = Guid.NewGuid().ToString();
+                enterpriseClient.Write(key, value);
+                var result = enterpriseClient.Read(key);
+                Assert.AreEqual(value, result);
+            }
         }
     }
 }

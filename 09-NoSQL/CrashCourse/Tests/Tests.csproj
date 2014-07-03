@@ -51,6 +51,10 @@
       <Project>{7b9907d3-d0f4-4566-96e8-3e3859abf08e}</Project>
       <Name>Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HighLevelClient\HighLevelClient.csproj">
+      <Project>{057ba9c0-e56d-4a74-bed2-7a0af447e4e3}</Project>
+      <Name>HighLevelClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
