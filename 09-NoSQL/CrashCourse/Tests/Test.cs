@@ -19,9 +19,9 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            ipEndPoint1 = new IPEndPoint(new IPAddress(new byte[] { 192, 168, 52, 178 }), 5088);
-            ipEndPoint2 = new IPEndPoint(new IPAddress(new byte[] { 192, 168, 52, 178 }), 5086);
-            ipEndPoint3 = new IPEndPoint(new IPAddress(new byte[] { 192, 168, 52, 178 }), 5087);
+            ipEndPoint1 = new IPEndPoint(new IPAddress(new byte[] { 127, 0, 0, 1 }), 15087);
+            ipEndPoint2 = new IPEndPoint(new IPAddress(new byte[] { 127, 0, 0, 1 }), 15088);
+            ipEndPoint3 = new IPEndPoint(new IPAddress(new byte[] { 127, 0, 0, 1 }), 15089);
             enterpriseClient = new EnterpriseClient(new[] {ipEndPoint1, ipEndPoint2, ipEndPoint3});
         }
 

@@ -8,7 +8,7 @@ DomainTryCount = 10
 DomainTimeout = 5
 
 # Конечная точка, на которой сервис принимает входящие запросы
-ListeningEndPoint = 0.0.0.0:5088
+ListeningEndPoint = 0.0.0.0:15088
 
 # Имя файла, из которого сервис читает чёрные списки
 blacklistFile = c:\Blacklists\blacklists
@@ -19,4 +19,4 @@ serviceName = print
 # Признак того, что сервис запускается в отладочном режиме
 debug = true
 
-endpoints =
+endpoints = 127.0.0.1:15087,127.0.0.1:15089

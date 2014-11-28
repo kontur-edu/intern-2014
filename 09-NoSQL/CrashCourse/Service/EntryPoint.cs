@@ -12,7 +12,7 @@ namespace Service
             ServiceUtils.ConfugureLog4Net();
 
             IContainer container =
-                ServiceUtils.ConfigureContainer("serviceSettings");
+                ServiceUtils.ConfigureContainer(arguments[0]);
             ServiceLocator.Create(container);
             var service = container.Get<HttpService>();
             service.Start(arguments);
