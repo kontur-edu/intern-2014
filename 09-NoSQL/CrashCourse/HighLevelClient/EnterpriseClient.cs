@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Client;
 using Client.Parameters;
@@ -10,6 +12,7 @@ namespace HighLevelClient
         private static readonly Random random = new Random();
         private readonly IPEndPoint[] endpoints;
         private readonly ServiceClient internalClient;
+        private IPEndPoint ClienReplica;
 
         public EnterpriseClient(IPEndPoint[] endpoints)
         {
@@ -17,21 +20,60 @@ namespace HighLevelClient
             internalClient = new ServiceClient();
         }
 
-        private IPEndPoint NextReplica
-        {
-            get { return endpoints[random.Next(endpoints.Length)]; }
-        }
-
         public void Write(string key, string value)
         {
-            Data data = internalClient.Read(key, NextReplica) ?? new Data();
-            internalClient.Write(key, new Data { Value = value, Version = data.Version + 1 }, NextReplica);
+            //var point = GetKeyByHash(key, endpoints);
+            //var backupPoint = GetBackupKeyByHash(key, endpoints);
+            foreach (IPEndPoint lPoint in endpoints)
+            {
+                try
+                {
+                    Data data = internalClient.Read(key, lPoint) ?? new Data();
+                    internalClient.Write(key, new Data { Value = value, Version = data.Version + 1 }, lPoint);
+                }
+                catch (Exception)
+                {
+                    continue;
+                    throw;
+                }
+            }
+            
         }
 
         public string Read(string key)
         {
-            Data read = internalClient.Read(key, NextReplica);
-            return read == null ? null : read.Value;
+            var alreadyRead = new List<Tuple<string, long>>();
+            foreach (IPEndPoint lPoint in endpoints)
+            {
+                try
+                {
+                    Data read = internalClient.Read(key, lPoint);
+                    if (read != null)
+                    {
+                        alreadyRead.Add(Tuple.Create(read.Value, read.Version));
+                    }
+                }
+                catch (Exception)
+                {
+                    continue;
+                    throw;
+                }
+            }
+
+            return alreadyRead
+                .OrderBy(response => response.Item2)
+                .Take(1)
+                .ToArray()[0].Item1;
+        }
+
+        private IPEndPoint GetKeyByHash(string key, IPEndPoint[] endpoints)
+        {
+            return endpoints[Math.Abs(key.GetHashCode())%endpoints.Length];
+        }
+
+        private IPEndPoint GetBackupKeyByHash(string key, IPEndPoint[] endpoints)
+        {
+            return endpoints[((Math.Abs(key.GetHashCode()) % endpoints.Length) + 1) % endpoints.Length];
         }
     }
 }

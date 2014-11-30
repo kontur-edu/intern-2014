@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using Client;
@@ -26,7 +28,7 @@ namespace Tests
         }
 
         [Test]
-        public void Test1()
+        public void ClientWritesAndImmidietlyReads()
         {
             for(var i = 0; i < 10; ++i)
             {
@@ -36,6 +38,31 @@ namespace Tests
                 var result = enterpriseClient.Read(key);
                 Assert.AreEqual(value, result);
             }
+        }
+
+        [Test]
+        public void ClientWritesAllAndReads()
+        {
+            var values = new List<string>();
+
+            for (var i = 0; i < 10; ++i)
+            {
+                var key = Guid.NewGuid().ToString();
+                var value = Guid.NewGuid().ToString();
+                enterpriseClient.Write(key, value);
+                values.Add(String.Join(" ", key, value));
+                var result = enterpriseClient.Read(key);
+                Assert.AreEqual(value, result);
+            }
+
+            for (var i = 0; i < 10; i++)
+            {
+                var key = values[i].Split(' ')[0];
+                var value = values[i].Split(' ')[1];
+                var result = enterpriseClient.Read(key);
+                Assert.AreEqual(value, result);
+            }
+
         }
     }
 }
