@@ -22,19 +22,23 @@ namespace HighLevelClient
 
         public void Write(string key, string value)
         {
-            //var point = GetKeyByHash(key, endpoints);
-            //var backupPoint = GetBackupKeyByHash(key, endpoints);
+            int succesWrite = 0;
             foreach (IPEndPoint lPoint in endpoints)
             {
-                try
+                if (succesWrite < endpoints.Count()%2 + 1)
                 {
-                    Data data = internalClient.Read(key, lPoint) ?? new Data();
-                    internalClient.Write(key, new Data { Value = value, Version = data.Version + 1 }, lPoint);
-                }
-                catch (Exception)
-                {
-                    continue;
-                    throw;
+                    try
+                    {
+
+                        Data data = internalClient.Read(key, lPoint) ?? new Data();
+                        internalClient.Write(key, new Data {Value = value, Version = data.Version + 1}, lPoint);
+                        succesWrite++;
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                        throw;
+                    }
                 }
             }
             
